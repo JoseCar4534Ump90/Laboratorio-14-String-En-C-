@@ -1,0 +1,68 @@
+#include <iostream>
+#include <vector>
+#include <string>
+
+using namespace std;
+
+// Función para validar que la pregunta cumpla con los requisitos
+bool esPreguntaValida(string pregunta) {
+    // 1. Validar que no esté vacía usando length() o size()
+    if (pregunta.size() == 0) {
+        cout << "-> Error: La pregunta no puede estar vacia. Intente de nuevo.\n";
+        return false;
+    }
+    
+    // 2. Validar que no tenga espacios innecesarios al inicio o al final usando at()
+    if (pregunta.at(0) == ' ') {
+        cout << "-> Error: La pregunta no debe contener espacios al inicio. Intente de nuevo.\n";
+        return false;
+    }
+    if (pregunta.at(pregunta.size() - 1) == ' ') {
+        cout << "-> Error: La pregunta no debe contener espacios al final. Intente de nuevo.\n";
+        return false;
+    }
+    
+    return true;
+}
+
+// Función con PASO POR REFERENCIA (&) para registrar las preguntas en el vector
+void registrarPreguntas(vector<string> &vectorPreguntas, int cantidad) {
+    string pregunta;
+    
+    for (int i = 0; i < cantidad; i++) {
+        do {
+            cout << "Pregunta " << i + 1 << ": ";
+            getline(cin, pregunta); // Lee la línea completa con espacios internos
+        } while (!esPreguntaValida(pregunta)); // Se repite si no pasa las validaciones
+        
+        // Almacena respetando el orden de ingreso
+        vectorPreguntas.push_back(pregunta);
+    }
+}
+
+// Función para mostrar las preguntas de forma numerada
+void mostrarPreguntas(const vector<string> &vectorPreguntas) {
+    cout << "\n===== PREGUNTAS REGISTRADAS =====\n";
+    for (size_t i = 0; i < vectorPreguntas.size(); i++) {
+        cout << i + 1 << ". " << vectorPreguntas.at(i) << "\n";
+    }
+}
+
+int main() {
+    int cantidadPreguntas;
+    
+    cout << "Ingrese la cantidad de preguntas: ";
+    cin >> cantidadPreguntas;
+    
+    // CRUCIAL: Limpiar el buffer del teclado después de usar 'cin >>' 
+    // para que el próximo 'getline' no se salte el primer ingreso.
+    cin.ignore(); 
+    
+    vector<string> listaPreguntas;
+    
+    // Llamada a las funciones encargadas de la lógica
+    registrarPreguntas(listaPreguntas, cantidadPreguntas);
+    mostrarPreguntas(listaPreguntas);
+    
+    return 0;
+}
