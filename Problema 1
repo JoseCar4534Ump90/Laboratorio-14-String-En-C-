@@ -1,0 +1,29 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+// Función que busca la subcadena 'a' dentro de 'b'
+int BuscarSubCadena(string a, string b) {
+    // find() devuelve la posición basada en 0 o string::npos si no la encuentra
+    size_t posicion = b.find(a);
+    
+    if (posicion != string::npos) {
+        // Sumamos 1 para cumplir con la salida esperada del ejemplo (base 1)
+        return posicion + 1; 
+    }
+    
+    return -1; // Si no se encuentra
+}
+
+int main() {
+    string subcadena = "oool";
+    string cadenaPrincipal = "hooola";
+    
+    int resultado = BuscarSubCadena(subcadena, cadenaPrincipal);
+    
+    cout << "Entrada: BuscarSubCadena(\"" << subcadena << "\", \"" << cadenaPrincipal << "\")" << endl;
+    cout << "Salida esperada: " << resultado << endl;
+    
+    return 0;
+}
